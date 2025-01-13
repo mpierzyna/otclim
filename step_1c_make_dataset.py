@@ -38,8 +38,10 @@ def load_cn2() -> xr.Dataset:
     """ ""
 
     # Load CSV file with two columns: DateTime and CN2
-    df = pd.read_csv(config.DATA_RAW_CN2ML / "cn2_las.csv")
-    time = pd.to_datetime(df["DateTime"])  # it is important that the index is a datetime64 object
+    df = pd.read_csv(config.DATA_RAW_CN2ML / "LAS120001_filtered.csv")
+    df["DateTime"] = pd.to_datetime(df["DateTime"])  # it is important that the index is a datetime64 object
+    df = df.sort_values(by="DateTime").dropna()
+    time = df["DateTime"].values
     cn2 = df["CN2"].values
 
     # Convert into xarray dataarray

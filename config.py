@@ -53,10 +53,6 @@ ERA5_YEARS: List[int] = [2022, 2023, 2024]
 ERA5_MONTHS: List[int] | None = None  # all months
 ERA5_DAYS: List[int] | None = None  # all days
 
-ERA5_YEARS: List[int] = [2022]
-ERA5_MONTHS: List[int] | None = [1]  # all months
-ERA5_DAYS: List[int] | None = [1]  # all days
-
 # Define the stations for which we have Cn2 observations
 STATIONS: Dict[str, Tuple[float, float]] = {
     "AE": (52, 4.37),  # TU Delft Aerospace building
@@ -119,16 +115,16 @@ FEATURES: List[str] = [
 TARGET: str = "Cn2"
 
 # Temporal splitting of data
-TRAIN_YEARS: List[str] = ["2022"]
+TRAIN_YEARS: List[str | slice] = [slice("2023-06-01", "2024-05-31")]  # Specify training years
 TRAIN_STATION: str = "AE"  # only one station for training supported right now
-TEST_YEARS: List[str] | None = ["2022"]  # Specify test years or None to use all years not in TRAIN_YEARS
+TEST_YEARS: List[str] | None = None  # Specify test years or None to use all years not in TRAIN_YEARS
 
 # Output directory for storing results
 OUT_DIR = pathlib.Path("output")
 
 # FLAML settings
 FLAML_CONFIG = {
-    "time_budget": 30,  # in s
+    "time_budget": 600,  # in s
     "task": "regression",
     # 5-fold CV WITHOUT shuffling to not create correlated folds
     "eval_method": "cv",

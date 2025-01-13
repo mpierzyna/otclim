@@ -87,7 +87,7 @@ def add_time_features(ds: xr.Dataset) -> xr.Dataset:
 if __name__ == "__main__":
     # Load all downloaded ERA5 data
     logger.info(f"Loading ERA5 data from {config.DATA_RAW_ERA5}")
-    ds = xr.open_mfdataset(config.DATA_RAW_ERA5.glob("*.nc")).load()
+    ds = xr.open_mfdataset(config.DATA_RAW_ERA5.glob("*.nc"), compat="override").load()
 
     # Collocate stations and ERA5 data
     lat, lon = zip(*config.STATIONS.values())
